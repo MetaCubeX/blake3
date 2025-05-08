@@ -219,6 +219,22 @@ func TestEigentrees(t *testing.T) {
 	}
 }
 
+func TestSplitWrite(t *testing.T) {
+	in := make([]byte, 2048)
+	for i := range in {
+		in[i] = byte(i)
+	}
+	exp := blake3.Sum256(in)
+	for i := range in {
+		h := blake3.New(32, nil)
+		h.Write(in[:i])
+		h.Write(in[i:])
+		if !bytes.Equal(h.Sum(nil), exp[:]) {
+			t.Fatalf("split write failed at position %v", i)
+		}
+	}
+}
+
 type nopReader struct{}
 
 func (nopReader) Read(p []byte) (int, error) { return len(p), nil }
