@@ -12,7 +12,6 @@ import (
 	"runtime"
 	"sync"
 
-	"github.com/metacubex/blake3/bao"
 	"github.com/metacubex/blake3/guts"
 )
 
@@ -326,44 +325,6 @@ func (or *OutputReader) Seek(offset int64, whence int) (int64, error) {
 
 // ensure that Hasher implements hash.Hash
 var _ hash.Hash = (*Hasher)(nil)
-
-// EncodedSize returns the size of a Bao encoding for the provided quantity
-// of data.
-//
-// Deprecated: Use bao.EncodedSize instead.
-func BaoEncodedSize(dataLen int, outboard bool) int {
-	return bao.EncodedSize(dataLen, 0, outboard)
-}
-
-// BaoEncode computes the intermediate BLAKE3 tree hashes of data and writes
-// them to dst.
-//
-// Deprecated: Use bao.Encode instead.
-func BaoEncode(dst io.WriterAt, data io.Reader, dataLen int64, outboard bool) ([32]byte, error) {
-	return bao.Encode(dst, data, dataLen, 0, outboard)
-}
-
-// BaoDecode reads content and tree data from the provided reader(s), and
-// streams the verified content to dst.
-//
-// Deprecated: Use bao.Decode instead.
-func BaoDecode(dst io.Writer, data, outboard io.Reader, root [32]byte) (bool, error) {
-	return bao.Decode(dst, data, outboard, 0, root)
-}
-
-// BaoEncodeBuf returns the Bao encoding and root (i.e. BLAKE3 hash) for data.
-//
-// Deprecated: Use bao.EncodeBuf instead.
-func BaoEncodeBuf(data []byte, outboard bool) ([]byte, [32]byte) {
-	return bao.EncodeBuf(data, 0, outboard)
-}
-
-// BaoVerifyBuf verifies the Bao encoding and root (i.e. BLAKE3 hash) for data.
-//
-// Deprecated: Use bao.VerifyBuf instead.
-func BaoVerifyBuf(data, outboard []byte, root [32]byte) bool {
-	return bao.VerifyBuf(data, outboard, 0, root)
-}
 
 func min(a, b int) int {
 	if a < b {
