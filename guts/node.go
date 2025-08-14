@@ -100,3 +100,10 @@ func CompressEigentree(buf []byte, key *[8]uint32, counter uint64, flags uint32)
 		return rec(cvs)
 	}
 }
+
+func min(a, b int) int {
+	if a < b {
+		return a
+	}
+	return b
+}

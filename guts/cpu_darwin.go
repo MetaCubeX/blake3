@@ -3,7 +3,7 @@ package guts
 import (
 	"syscall"
 
-	"github.com/klauspost/cpuid/v2"
+	"golang.org/x/sys/cpu"
 )
 
 var (
@@ -12,8 +12,8 @@ var (
 )
 
 func init() {
-	haveAVX2 = cpuid.CPU.Supports(cpuid.AVX2)
-	haveAVX512 = cpuid.CPU.Supports(cpuid.AVX512F)
+	haveAVX2 = cpu.X86.HasAVX2
+	haveAVX512 = cpu.X86.HasAVX512F
 	if !haveAVX512 {
 		// On some Macs, AVX512 detection is buggy, so fallback to sysctl
 		b, _ := syscall.Sysctl("hw.optional.avx512f")

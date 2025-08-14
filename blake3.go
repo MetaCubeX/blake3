@@ -272,11 +272,11 @@ func (or *OutputReader) Read(p []byte) (int, error) {
 			par := min(numBufs, runtime.NumCPU())
 			per := uint64(numBufs / par)
 			var wg sync.WaitGroup
-			for range par {
+			for a := 0; a < par; a++ {
 				wg.Add(1)
 				go func(p []byte, n guts.Node) {
 					defer wg.Done()
-					for i := range per {
+					for i := uint64(0); i < per; i++ {
 						guts.CompressBlocks((*[bufsize]byte)(p[i*bufsize:]), n)
 						n.Counter += bufsize / guts.BlockSize
 					}
@@ -363,4 +363,11 @@ func BaoEncodeBuf(data []byte, outboard bool) ([]byte, [32]byte) {
 // Deprecated: Use bao.VerifyBuf instead.
 func BaoVerifyBuf(data, outboard []byte, root [32]byte) bool {
 	return bao.VerifyBuf(data, outboard, 0, root)
+}
+
+func min(a, b int) int {
+	if a < b {
+		return a
+	}
+	return b
 }

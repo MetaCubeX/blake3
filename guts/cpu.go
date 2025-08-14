@@ -3,9 +3,9 @@
 
 package guts
 
-import "github.com/klauspost/cpuid/v2"
+import "golang.org/x/sys/cpu"
 
 var (
-	haveAVX2   = cpuid.CPU.Supports(cpuid.AVX2)
-	haveAVX512 = cpuid.CPU.Supports(cpuid.AVX512F)
+	haveAVX2   = cpu.X86.HasAVX2
+	haveAVX512 = cpu.X86.HasAVX512F
 )

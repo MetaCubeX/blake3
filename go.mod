@@ -1,5 +1,5 @@
 module github.com/metacubex/blake3
 
-go 1.22
+go 1.18
 
-require github.com/klauspost/cpuid/v2 v2.0.9
+require golang.org/x/sys v0.30.0
